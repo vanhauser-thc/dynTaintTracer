@@ -1,0 +1,17 @@
+cmake_minimum_required (VERSION 3.0)
+project (dynTaintTracer)
+
+set(CFLAGS   "-O3 -Wno-pointer-to-int-cast")
+
+add_library(dynTaintTracer SHARED dynTaintTracer.cpp)
+find_package(DynamoRIO REQUIRED)
+configure_DynamoRIO_client(dynTaintTracer)
+use_DynamoRIO_extension(dynTaintTracer "drx")
+use_DynamoRIO_extension(dynTaintTracer "drsyms")
+use_DynamoRIO_extension(dynTaintTracer "drmgr")
+use_DynamoRIO_extension(dynTaintTracer "drwrap")
+use_DynamoRIO_extension(dynTaintTracer "drutil")
+use_DynamoRIO_extension(dynTaintTracer "drreg")
+use_DynamoRIO_extension(dynTaintTracer "droption")
+set(CMAKE_C_FLAGS   "${CFLAGS}")
+set(CMAKE_CXX_FLAGS "-std=c++14 -flto -O3")
